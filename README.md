@@ -1,6 +1,6 @@
 🚗 DriveRent - Car Rental Website Project
 
-![Project Screenshot](./images/photo-collage.png.png) 
+![Project Screenshot](./images/homepage.png) 
 Welcome to the DriveRent! This application provides a comprehensive platform for users to browse, reserve, and return vehicles, complemented by an administrative interface for efficient fleet and user management.
 
 ✨ Key Features
