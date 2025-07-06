@@ -54,11 +54,11 @@ Database Setup:
 
 Navigate to http://localhost/phpmyadmin in your browser.
 
-Create a new database named carproject.
+Create a new database named Cardb.
 
-Import the carproject.sql file (located in the database folder of the cloned project) into your newly created carproject database.
+Import the Cardb.sql file (located in the database folder of the cloned project) into your newly created Cardb database.
 
 Launch Application: Open your web browser and visit http://localhost:8080/ (or http://localhost/ if your Apache port is default).
 
 🗄️ Database Structure
-The project utilizes a MySQL database named carproject, with connection.php handling all database interactions.
+The project utilizes a MySQL database named Cardb, with connection.php handling all database interactions.
