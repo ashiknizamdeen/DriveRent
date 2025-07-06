@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - DriveRent</title>
+    <link rel="stylesheet" href="css/cont.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="floating-elements"></div>
+        
+        <div class="content-wrapper">
+            <nav class="navbar">
+                <div class="logo">DriveRent</div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.php">HOME</a></li>
+                        <li><a href="about.html">ABOUT</a></li>
+                        <li><a href="services.html">SERVICES</a></li>
+                        <li><a href="contactus.html" class="active">CONTACT</a></li>
+                    </ul>
+                </div>
+                <button class="admin-btn"><a href="adminlogin.php">ADMIN LOGIN</a></button>
+            </nav>
+
+            <div class="main-content">
+                <div class="container">
+                    <div class="contact-info">
+                        <h1>Get in <span>Touch</span></h1>
+                        <p>Ready to experience luxury driving? We're here to help you find the perfect vehicle for your needs.</p>
+                        <p>Whether you're planning a special occasion or need a reliable ride, our team is ready to assist you.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                Email us at <a href="mailto:support@driverent.com">support@driverent.com</a>
+                            </div>
+                            <div class="contact-item">
+                                Call us at <a href="tel:+1234567890">+1 (234) 567-890</a>
+                            </div>
+                            <div class="contact-item">
+                                Visit us at 123 Luxury Drive, Car City, CC 12345
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-container">
+                        <h2 class="form-title">Send us a Message</h2>
+                        <form id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name*</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" name="lastName">
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="email">Email Address*</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="message">How can we help you?</label>
+                                <textarea id="message" name="message" placeholder="Tell us about your car rental needs, preferred dates, vehicle type, or any special requirements..."></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                message: document.getElementById('message').value
+            };
+
+            // Basic validation
+            if (!formData.firstName || !formData.email) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Simulate form submission
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+                document.getElementById('contactForm').reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }, 2000);
+        });
+
+        // Enhanced form interactions
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

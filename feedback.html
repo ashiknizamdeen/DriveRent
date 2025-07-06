@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveRent - Customer Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1619751875403-ea072c8cc307?q=80&w=1753&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .header {
+            background: rgba(0,0,0,0.9);
+            padding: 15px 0;
+            border-bottom: 2px solid #ff6b35;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b35;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            min-height: calc(100vh - 150px);
+        }
+
+        .feedback-card {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b35, #ff8c42, #ff6b35);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .card-header h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-header .highlight {
+            color: #ff6b35;
+        }
+
+        .card-header p {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .rating-section {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .rating-section:hover {
+            border-color: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        .rating-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .rating-option {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+
+        .rating-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+            min-width: 85px;
+            color: #ccc;
+        }
+
+        .rating-label:hover {
+            transform: translateY(-3px);
+            border-color: #ff6b35;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .rating-option input[type="radio"]:checked + .rating-label {
+            background: #ff6b35;
+            color: #fff;
+            border-color: #ff6b35;
+            transform: translateY(-3px);
+        }
+
+        .rating-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .rating-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(40, 40, 40, 0.8);
+            color: #fff;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+            background: rgba(50, 50, 50, 0.9);
+        }
+
+        .input-field::placeholder {
+            color: #999;
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .message {
+            display: none;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: rgba(46, 160, 67, 0.2);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .car-silhouette {
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 200px;
+            height: 100px;
+            opacity: 0.1;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path d="M20 60 L40 40 L160 40 L180 60 L180 80 L160 80 L160 70 L40 70 L40 80 L20 80 Z" fill="%23ff6b35"/><circle cx="50" cy="75" r="12" fill="%23ff6b35"/><circle cx="150" cy="75" r="12" fill="%23ff6b35"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .element-1 {
+            top: 20%;
+            left: 10%;
+            width: 30px;
+            height: 30px;
+            background: #ff6b35;
+            border-radius: 50%;
+            animation-delay: -2s;
+        }
+
+        .element-2 {
+            top: 70%;
+            right: 15%;
+            width: 20px;
+            height: 20px;
+            background: #ff8c42;
+            border-radius: 50%;
+            animation-delay: -4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .feedback-card {
+                padding: 25px;
+            }
+            
+            .card-header h1 {
+                font-size: 2rem;
+            }
+            
+            .rating-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .rating-label {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <header class="header">
+        <div class="header-content">
+            <a href="index.php" class="logo">DriveRent</a>
+            <nav class="nav-links">
+                <a href="index.php">HOME</a>
+                <a href="about.html">ABOUT</a>
+                <a href="services.html">SERVICES</a>
+                <a href="contactus.html">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="feedback-card">
+            <div class="floating-elements">
+                <div class="floating-element element-1"></div>
+                <div class="floating-element element-2"></div>
+            </div>
+            <div class="car-silhouette"></div>
+            
+            <div class="card-header">
+                <h1>Customer <span class="highlight">Feedback</span></h1>
+                <p>Help us improve your car rental experience</p>
+            </div>
+
+            <form id="feedbackForm">
+                <div class="rating-section">
+                    <label>How would you rate your overall rental experience?</label>
+                    <div class="rating-options">
+                        <div class="rating-option">
+                            <input type="radio" name="experience" id="poor" value="poor">
+                            <label for="poor" class="rating-label">
+                                <span class="rating-icon">😞</span>
+                                <span class="rating-text">Poor</span>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="experience" id="fair" value="fair">
+                            <label for="fair" class="rating-label">
+                                <span class="rating-icon">😐</span>
+                                <span class="rating-text">Fair</span>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="experience" id="good" value="good">
+                            <label for="good" class="rating-label">
+                                <span class="rating-icon">😊</span>
+                                <span class="rating-text">Good</span>
+                            </label>
+                        </div>
+                        <div class="rating-option">
+                            <input type="radio" name="experience" id="excellent" value="excellent">
+                            <label for="excellent" class="rating-label">
+                                <span class="rating-icon">🤩</span>
+                                <span class="rating-text">Excellent</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Share your experience with us</label>
+                    <textarea class="input-field" id="comments" name="comments" placeholder="Tell us about your rental experience, the car condition, our service quality, or any suggestions for improvement..." rows="5"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" class="input-field" id="name" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="input-field" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Feedback</button>
+            </form>
+
+            <div id="successMessage" class="message success-message">
+                <h3>🎉 Thank you for your feedback!</h3>
+                <p>Your valuable feedback helps us provide better car rental services. We appreciate your time and input.</p>
+            </div>
+
+            <div id="errorMessage" class="message error-message">
+                <h3>⚠️ Something went wrong</h3>
+                <p>Please check your information and try again. Contact support if the issue persists.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const experience = formData.get('experience');
+            const comments = formData.get('comments').trim();
+            
+            // Basic validation
+            if (!name || !email || !experience) {
+                showMessage('error', 'Please fill in all required fields including your rating.');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('error', 'Please enter a valid email address.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Hide form and show success message
+                document.getElementById('feedbackForm').style.display = 'none';
+                showMessage('success');
+                
+                // Reset button (in case user wants to submit again)
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Auto-refresh or redirect after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('feedbackForm').style.display = 'block';
+                    hideMessages();
+                    document.getElementById('feedbackForm').reset();
+                }, 5000);
+            }, 2000);
+        });
+        
+        function showMessage(type, customMessage = '') {
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            hideMessages();
+            
+            if (type === 'success') {
+                successMsg.style.display = 'block';
+                successMsg.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                errorMsg.style.display = 'block';
+                if (customMessage) {
+                    errorMsg.querySelector('p').textContent = customMessage;
+                }
+                errorMsg.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function hideMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        
+        // Add interactive effects
+        document.querySelectorAll('.rating-option input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    // Add bounce effect
+                    const label = this.nextElementSibling;
+                    label.style.animation = 'none';
+                    setTimeout(() => {
+                        label.style.animation = 'bounce 0.5s ease';
+                    }, 10);
+                }
+            });
+        });
+        
+        // Add focus effects to input fields
+        document.querySelectorAll('.input-field').forEach(field => {
+            field.addEventListener('focus', function() {
+                this.style.transform = 'translateY(-1px)';
+            });
+            
+            field.addEventListener('blur', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Add bounce animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { transform: translateY(-3px); }
+                40% { transform: translateY(-8px); }
+                60% { transform: translateY(-5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
