@@ -63,4 +63,6 @@ Launch Application: Open your web browser and visit http://localhost:8080/ (or h
 🗄️ Database Structure
 The project utilizes a MySQL database named Cardb, with connection.php handling all database interactions.
 
+**Note: Development of admin dashboard is still on progress**
+
 **Made with ❤️ by Ashik**
