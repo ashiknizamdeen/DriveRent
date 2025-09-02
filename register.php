@@ -469,7 +469,7 @@
     $pass = mysqli_real_escape_string($con, $_POST['pass']);
     $cpass = mysqli_real_escape_string($con, $_POST['cpass']);
     $gender = mysqli_real_escape_string($con, $_POST['gender']);
-    $Pass = md5($pass);
+    $Pass = password_hash($pass, PASSWORD_DEFAULT);
 
     if (empty($fname) || empty($lname) || empty($email) || empty($lic) || empty($ph) || empty($pass) || empty($gender)) {
       echo '<script>showAlert("Please fill in all fields", "error");</script>';

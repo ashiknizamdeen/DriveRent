@@ -1,13 +1,28 @@
 <?php
 
 require_once('connection.php');
-$bookid=$_GET['id'];
-$sql="SELECT *from booking where BOOK_Id=$bookid";
-$result=mysqli_query($con,$sql);
-$res = mysqli_fetch_assoc($result);
-$car_id=$res['CAR_ID'];
-$sql2="SELECT *from cars where CAR_ID=$car_id";
-$carres=mysqli_query($con,$sql2);
+
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die('Invalid booking ID');
+}
+
+$bookid = (int)$_GET['id'];
+
+$stmt = $con->prepare("SELECT * FROM booking WHERE BOOK_Id = ?");
+$stmt->bind_param("i", $bookid);
+$stmt->execute();
+$result = $stmt->get_result();
+$res = $result->fetch_assoc();
+
+if (!$res) {
+    die('Booking not found');
+}
+
+$car_id = $res['CAR_ID'];
+$stmt2 = $con->prepare("SELECT * FROM cars WHERE CAR_ID = ?");
+$stmt2->bind_param("i", $car_id);
+$stmt2->execute();
+$carres = $stmt2->get_result();
 $carresult = mysqli_fetch_assoc($carres);
 $email=$res['EMAIL'];
 $carname=$carresult['CAR_NAME'];
@@ -19,10 +34,13 @@ if($res['BOOK_STATUS']=='APPROVED' || $res['BOOK_STATUS']=='RETURNED')
     echo '<script> window.location.href = "adminbook.php";</script>';
 }
 else{
-    $query="UPDATE booking set  BOOK_STATUS='APPROVED' where BOOK_ID=$bookid";
-    $queryy=mysqli_query($con,$query);
-    $sql2="UPDATE cars set AVAILABLE='N' where CAR_ID=$res[CAR_ID]";
-    $query2=mysqli_query($con,$sql2);
+    $stmt3 = $con->prepare("UPDATE booking SET BOOK_STATUS='APPROVED' WHERE BOOK_ID = ?");
+    $stmt3->bind_param("i", $bookid);
+    $stmt3->execute();
+    
+    $stmt4 = $con->prepare("UPDATE cars SET AVAILABLE='N' WHERE CAR_ID = ?");
+    $stmt4->bind_param("i", $res['CAR_ID']);
+    $stmt4->execute();
     
     echo '<script>alert("APPROVED SUCCESSFULLY")</script>';
     // $to_email = $email;
