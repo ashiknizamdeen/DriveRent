@@ -3,6 +3,7 @@
 ![Project Screenshot](./images/homepage.png) 
 Welcome to the DriveRent! This application provides a comprehensive platform for users to browse, reserve, and return vehicles, complemented by an administrative interface for efficient fleet and user management.
 
+##hosting arrangment happening soon!
 ✨ Key Features
 User Authentication: Secure login for seamless access.
 
