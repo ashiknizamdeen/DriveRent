@@ -6,6 +6,7 @@ Welcome to the DriveRent! This application provides a comprehensive platform for
 **Domain hosting happening soon!
 
 ✨ Key Features
+
 User Authentication: Secure login for seamless access.
 
 Dynamic Car Listings:
